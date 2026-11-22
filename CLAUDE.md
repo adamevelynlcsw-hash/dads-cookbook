@@ -82,6 +82,22 @@ House ratios and rules:
 
 Pressure cooker, slow cooker, pellet smoker (competition-blend pellets), charcoal grill, oven, stovetop, cast iron (bare iron only on the smoker and charcoal grill; enameled cast iron indoors), 24 oz Ninja Creami, CHEF iQ probe thermometer.
 
+## Reference books (local only)
+
+The reference books live in `reference/books/` in the local clone on the laptop, and Git ignores that folder. **Check `reference/book-matrix.md` first.** It maps each topic to the book and PDF page to open, so read only that section and never a whole book. If the laptop isn't connected, work from the takeaways below and general knowledge, and say so.
+
+Takeaways worth applying without opening a book (in our own words):
+
+- **Salt timing:** salt meat at least 40 minutes ahead (overnight is better), or right before it hits the heat. Salting 3–40 minutes ahead is the worst window, because the surface is still wet with drawn-out juice. (Food Lab)
+- **Brine strength:** a 5% brine (20 parts water to 1 part salt by weight) is the all-purpose strength for pickles and short soaks. Our 2% is for long, equilibrium-style brines. Morton kosher salt runs about 2 Tbsp per oz. (Ratio)
+- **Vinaigrette:** 3 oil to 1 acid, plus about ⅓ part emulsifier (mustard, honey, mayo). Add fresh herbs at serving, not to stored dressing. (Food Lab, Ratio)
+- **Sauces:** mayo is about 20 oil to 1 liquid plus a yolk. 1 Tbsp cornstarch thickens about 1 cup of liquid.
+- **Rest meat** before slicing. **Smash burgers once**, in the first 30 seconds; a late or second smash squeezes out the juice. (Food Lab)
+- **Pancakes** by weight: 2 flour, 2 liquid, 1 egg, ½ butter. **Sausage:** 3 meat to 1 fat. (Ratio)
+- **Acid in two places:** acid cooked in sets the background, and acid added at the end makes the dish taste bright. Acid also balances sweetness. (Nosrat)
+- **Fix over-salting** by diluting, adding more of the unsalted base, or balancing with acid or fat. Don't try to "cook it out." (Nosrat)
+- House rules in this file win over any book.
+
 ## Oil and vinegar pairing answers
 
 Use the model in `notes/oil-and-vinegar.md`.
