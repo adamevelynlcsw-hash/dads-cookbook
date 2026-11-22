@@ -1,0 +1,7 @@
+# Local-only material. The repo is public.
+reference/
+_migration/
+
+# Never commit copyrighted books
+*.pdf
+*.epub
