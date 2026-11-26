@@ -12,7 +12,7 @@ The book is exactly two things:
 1. **`index.html`** is the master copy. Every recipe lives as plain text (markdown) inside its `<script type="text/plain" id="book">` block. Chapters and the menu are built from the `@@` header lines, in the order they appear. Don't touch the CSS or JavaScript unless asked.
 2. **`recipes-pending.md`** is the one transition file. It holds finished recipes that aren't on the site yet. After they're published, clear its Pending section back to "None".
 
-No per-recipe pages, logs, draft copies, changelogs or "addendum" files. `notes/` holds reference models (like the oil and vinegar pairing model), not recipes.
+No per-recipe pages, logs, draft copies, changelogs or "addendum" files. The one exception is `print/`: the printable PDF and the script that builds it from `index.html`. It is generated, never edited by hand, and an Action rebuilds it when `index.html` changes on `main`. `notes/` holds reference models (like the oil and vinegar pairing model), not recipes.
 
 Never commit copyrighted book content (PDFs, EPUBs, photos of pages, quoted text). Those stay in the local `reference/` folder, which `.gitignore` excludes. The repo is public.
 

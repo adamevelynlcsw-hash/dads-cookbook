@@ -1,0 +1,114 @@
+/* Print stylesheet for the book-style PDF. US Letter, mirrored margins for two-sided printing. */
+:root {
+  --ink: #2b1d12; --muted: #6b5847; --brown: #7a3e1d; --gold: #c98a2b;
+  --cream: #f8f1e1; --line: #e3d5bb; --paper: #fffdf8;
+}
+
+@page {
+  size: 8.5in 11in;
+  margin: 0.8in 0.75in 0.85in 0.75in;
+  @top-center { content: string(chapter); font: 600 8.5pt "Source Sans 3", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #9a8570; }
+  @bottom-center { content: counter(page); font: 600 9.5pt "Playfair Display", serif; color: var(--brown); }
+}
+@page :left  { margin-left: 0.75in; margin-right: 0.95in; }   /* wider inside (gutter) margin for binding */
+@page :right { margin-left: 0.95in; margin-right: 0.75in; }
+@page :blank { @top-center { content: none; } @bottom-center { content: none; } }
+@page cover  { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page front  { @top-center { content: none; } @bottom-center { content: none; } }
+@page opener { background: var(--cream); @top-center { content: none; } }
+
+html { font: 10.5pt/1.5 "Source Sans 3", "DejaVu Sans", sans-serif; color: var(--ink); }
+body { margin: 0; }
+h1, h2, h3, h4 { font-family: "Playfair Display", "DejaVu Serif", serif; color: var(--brown); line-height: 1.2; }
+a { color: inherit; text-decoration: none; }
+.eyebrow { font-size: 8.5pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 4pt; }
+.sub { font-style: italic; color: var(--muted); font-size: 12pt; margin: 2pt 0 10pt; }
+
+/* ---------- cover ---------- */
+.cover {
+  page: cover; break-after: page;
+  width: 8.5in; height: 11in; position: relative; overflow: hidden;
+  background: #fbf3e2; text-align: center;
+}
+.cover-band { padding: 0.45in 0.6in 0; }
+.cover-eyebrow { margin: 0; font: 700 10pt "Source Sans 3", sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+.cover-title { margin: 2pt 0 0; font-size: 50pt; color: var(--brown); font-weight: 700; line-height: 1.05; }
+.cover-sub { margin: 4pt 0 0; font: italic 600 13pt "Playfair Display", serif; color: var(--muted); }
+.cover-pic {
+  position: absolute; left: 50%; top: 2.2in; transform: translateX(-50%);
+  width: 6.25in; height: 8.35in; border-radius: 14pt; overflow: hidden;
+  border: 5pt solid #fff; box-shadow: 0 0 0 1.5pt var(--brown);
+  background-size: cover; background-position: center top;
+}
+.cover-caption {
+  position: absolute; right: 12pt; bottom: 12pt; margin: 0; padding: 4pt 12pt; border-radius: 20pt;
+  background: rgba(255,253,248,.92); color: var(--brown); font: italic 600 11pt "Playfair Display", serif;
+}
+
+/* ---------- front matter ---------- */
+.front { page: front; break-after: page; text-align: center; padding-top: 0.6in; }
+.front .prose { text-align: left; margin-top: 14pt; }
+.front-title { font-size: 30pt; margin: 0 0 6pt; }
+.edition { margin-top: 22pt; font-size: 9pt; color: var(--muted); text-align: center; }
+
+.toc { page: front; break-before: right; break-after: page; }
+.toc .front-title { text-align: center; margin-bottom: 14pt; }
+.toc-list, .toc-list ol { list-style: none; margin: 0; padding: 0; }
+.toc-list { columns: 2; column-gap: 0.35in; font-size: 9pt; line-height: 1.32; }
+.toc-top { break-inside: avoid-column; margin-bottom: 5pt; }
+.toc-top > a { display: flex; font: 700 11pt "Playfair Display", serif; color: var(--brown); border-bottom: 1px solid var(--line); padding-bottom: 1pt; margin-bottom: 2pt; }
+.toc-sub { font-size: 8pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 4pt 0 1pt; }
+.toc-r a { display: flex; }
+.toc-list a::after { content: target-counter(attr(href), page); margin-left: auto; padding-left: 6pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.toc-r a { border-bottom: 1px dotted #eadfca; }
+
+.principles { break-before: right; }
+.principles .front-title { string-set: chapter "Basic Principles"; }
+
+/* ---------- chapter openers ---------- */
+.opener { page: opener; break-before: right; break-after: page; text-align: center; padding-top: 0.25in; }
+.opener .art svg { width: 4.4in; height: auto; }
+.chapter-title { string-set: chapter content(text); font-size: 40pt; margin: 2pt 0 8pt; }
+.opener-list { margin: 16pt auto 0; max-width: 4.6in; text-align: left; columns: 2; column-gap: .3in; font-size: 10pt; }
+.opener-list h4 { margin: 0 0 3pt; font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); font-family: "Source Sans 3", sans-serif; break-after: avoid; }
+.opener-list ul { list-style: none; padding: 0; margin: 0 0 8pt; }
+.opener-list li { padding: 2pt 0; border-bottom: 1px dotted var(--line); break-inside: avoid; }
+.opener-list a::after { content: " · " target-counter(attr(href), page); color: var(--muted); font-size: 9pt; }
+
+/* ---------- recipes ---------- */
+.recipe { break-before: page; }
+.crumb { string-set: chapter content(text); font-size: 8.5pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.badge { background: #f6e1b5; color: var(--brown); border-radius: 8pt; padding: 1pt 6pt; letter-spacing: .04em; }
+.rtitle { font-size: 26pt; margin: 3pt 0 2pt; }
+.meta { display: flex; flex-wrap: wrap; gap: 4pt 16pt; background: var(--cream); border: 1px solid var(--line); border-radius: 6pt; padding: 7pt 10pt; margin: 4pt 0 10pt; font-size: 9.5pt; }
+.meta .m span { display: block; font-size: 7.5pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.prose h2 { font-size: 14pt; margin: 14pt 0 4pt; padding-bottom: 2pt; border-bottom: 1.5px solid var(--line); break-after: avoid; }
+.prose h3 { font-size: 11.5pt; margin: 10pt 0 3pt; break-after: avoid; }
+.prose h4 { font-size: 10.5pt; margin: 8pt 0 2pt; break-after: avoid; }
+.prose p { margin: 0 0 6pt; orphans: 3; widows: 3; }
+.prose ul, .prose ol { margin: 0 0 6pt; padding-left: 16pt; }
+.prose li { margin: 1.5pt 0; break-inside: avoid; }
+.prose ol > li::marker { font-weight: 700; color: var(--brown); }
+.prose ul > li::marker { color: var(--gold); }
+.prose blockquote { margin: 6pt 0; padding: 5pt 10pt; border-left: 3px solid var(--gold); background: var(--cream); font-style: italic; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 4pt 0 8pt; }
+.prose th { text-align: left; background: var(--cream); color: var(--brown); font-weight: 700; }
+.prose th, .prose td { border: 1px solid var(--line); padding: 3pt 5pt; vertical-align: top; }
+.prose tr { break-inside: avoid; }
+.prose em { color: #4b3a2c; }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 10pt 0; }
+.prose code { font-family: inherit; background: var(--cream); padding: 0 2pt; }
+.draft-box { margin-top: 10pt; border: 1px dashed var(--gold); border-radius: 6pt; padding: 6pt 10pt; background: #fff8e8; }
+.end { text-align: center; margin-top: 10pt; }
+
+/* ---------- back page ---------- */
+.back { page: front; break-before: left; text-align: center; padding-top: 0.9in; }
+.back figure, .plate-page figure { margin: 0; }
+.back img, .plate-page img { width: 100%; height: auto; border-radius: 12pt; border: 4pt solid #fff; box-shadow: 0 0 0 1.5pt var(--brown); }
+.back figcaption, .plate-page figcaption { margin-top: 8pt; font: italic 600 12pt "Playfair Display", serif; color: var(--brown); }
+.plate-page { page: front; break-before: page; break-after: page; text-align: center; padding-top: 1.6in; }
+.back-line { font: italic 600 16pt "Playfair Display", serif; color: var(--brown); }
+.heart { color: #c0392b; }
+
+/* outline icon of the dish, under each recipe title */
+.ricon { display: block; width: 0.95in; height: 0.71in; color: var(--brown); margin: 2pt 0 2pt; }
