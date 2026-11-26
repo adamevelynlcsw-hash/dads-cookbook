@@ -51,7 +51,7 @@ The navigation menu is fine as it is. Don't redesign the page unless asked.
 
 Mains also get a **Serve With** (side pairings) section. Sub-recipes (sauces, salsas, pickles, slaws) get their own block so they're findable on their own, and parent recipes point to them by name and chapter.
 
-Current chapters: Breakfast; Quick Dinners › Asian Noodles & Rice; Pasta & Mains; Sauces & Salsas; Tacos; Fire › Smoker / Grill / Burgers / Dutch Oven; Seafood; Salads & Dressings; Sides; Desserts. The `INTRO` and `PRINCIPLES` blocks are not recipes.
+Current chapters: Breakfast; Quick Dinners › Asian Noodles & Rice; Pasta & Mains; Soups; Sauces & Salsas; Tacos; Fire › Smoker / Grill / Burgers / Dutch Oven; Seafood; Salads & Dressings; Sides; Desserts. The `INTRO` and `PRINCIPLES` blocks are not recipes.
 
 ## Recipe conventions
 
