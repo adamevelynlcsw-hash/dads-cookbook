@@ -36,6 +36,12 @@ const m = html.match(/<script type="text\/plain" id="book">([\s\S]*?)<\/script>/
 if (!m) throw new Error("Could not find the book block in index.html");
 const RAW = m[1];
 
+// The recipe icons live in index.html (between the ICONS markers) so the site and the book share one set.
+const ICON_SRC = html.match(/\/\* ICONS:START \*\/([\s\S]*?)\/\* ICONS:END \*\//);
+if (!ICON_SRC) throw new Error("Could not find the recipe icons in index.html");
+const iconSvg = new Function(ICON_SRC[1] + "; return iconSvg;")();
+const pic = f => pathToFileURL(join(HERE, "covers", f)).href;
+
 const slug = s => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 marked.setOptions({ gfm: true, breaks: false });
@@ -82,6 +88,7 @@ const recipeHtml = (r, top) => `
   <section class="recipe" id="r-${r.slug}" data-chapter="${esc(top)}">
     <div class="crumb">${esc(r.chapter)}${r.status === "draft" ? ' <span class="badge">Draft, still testing</span>' : ""}</div>
     <h1 class="rtitle">${esc(r.title)}</h1>
+    ${iconSvg(r)}
     ${r.sub ? `<p class="sub">${esc(r.sub)}</p>` : ""}
     ${metaHtml(r.meta)}
     <div class="prose">${marked.parse(r.body)}</div>
@@ -153,6 +160,10 @@ ${readFileSync(join(HERE, "book.css"), "utf8")}
   <p class="edition">${RECIPES.length} recipes · Printed ${esc(today)}<br>Always current online at adamevelynlcsw-hash.github.io/dads-cookbook</p>
 </section>
 
+<section class="plate-page" id="table">
+  <figure><img src="${pic("table-cartoon.jpg")}" alt=""><figcaption>Around our table · Thanksgiving 2025</figcaption></figure>
+</section>
+
 ${tocHtml()}
 
 <section class="principles" id="principles" data-chapter="Basic Principles">
@@ -165,7 +176,7 @@ ${tocHtml()}
 ${TOPS.map(chapterHtml).join("")}
 
 <section class="back">
-  <div class="art">${DEFAULT}</div>
+  <figure><img src="${pic("kitchen-cartoon.jpg")}" alt=""><figcaption>Not every recipe goes to plan.</figcaption></figure>
   <p class="back-line">Made with love <span class="heart">♥</span> seasoned to taste</p>
   <p class="edition">Have a recipe to add? Send it to Dad.</p>
 </section>

@@ -102,7 +102,13 @@ a { color: inherit; text-decoration: none; }
 .end { text-align: center; margin-top: 10pt; }
 
 /* ---------- back page ---------- */
-.back { page: front; break-before: page; text-align: center; padding-top: 2.4in; }
-.back .art svg { width: 2.4in; height: auto; }
+.back { page: front; break-before: left; text-align: center; padding-top: 0.9in; }
+.back figure, .plate-page figure { margin: 0; }
+.back img, .plate-page img { width: 100%; height: auto; border-radius: 12pt; border: 4pt solid #fff; box-shadow: 0 0 0 1.5pt var(--brown); }
+.back figcaption, .plate-page figcaption { margin-top: 8pt; font: italic 600 12pt "Playfair Display", serif; color: var(--brown); }
+.plate-page { page: front; break-before: page; break-after: page; text-align: center; padding-top: 1.6in; }
 .back-line { font: italic 600 16pt "Playfair Display", serif; color: var(--brown); }
 .heart { color: #c0392b; }
+
+/* outline icon of the dish, under each recipe title */
+.ricon { display: block; width: 0.95in; height: 0.71in; color: var(--brown); margin: 2pt 0 2pt; }
