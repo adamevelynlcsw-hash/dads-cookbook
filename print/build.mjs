@@ -17,7 +17,7 @@ import { marked } from "marked";
 import { chromium } from "playwright";
 import { ART, DEFAULT, FLOURISH } from "./illustrations.mjs";
 
-const DEFAULT_COVER = "photo";           // "photo" or "cartoon"
+const DEFAULT_COVER = "cartoon";           // "photo" or "cartoon"
 const COVERS = {
   photo: "covers/cover-photo.jpg",
   cartoon: "covers/cover-cartoon.jpg",
@@ -129,7 +129,7 @@ function bookHtml(coverKey) {
 @font-face{font-family:"Source Sans 3";font-weight:600;src:url("${pathToFileURL(SANS)}/source-sans-3-latin-600-normal.woff2")}
 @font-face{font-family:"Source Sans 3";font-weight:700;src:url("${pathToFileURL(SANS)}/source-sans-3-latin-700-normal.woff2")}
 ${readFileSync(join(HERE, "book.css"), "utf8")}
-.cover{background-image:url("${cover}")}
+.cover-pic{background-image:url("${cover}");background-position:${coverKey === "photo" ? "center 78%" : "center top"}}
 </style>
 <script>window.PagedConfig={auto:true,after:()=>{window.__pagedDone=true}};</script>
 <script src="${pathToFileURL(PAGED).href}"></script>
@@ -141,7 +141,7 @@ ${readFileSync(join(HERE, "book.css"), "utf8")}
     <h1 class="cover-title">Family Recipes</h1>
     <p class="cover-sub">Made with love, seasoned to taste, and always better shared.</p>
   </div>
-  <p class="cover-caption">${esc(COVER_CAPTION)}</p>
+  <div class="cover-pic"><p class="cover-caption">${esc(COVER_CAPTION)}</p></div>
 </section>
 
 <section class="front" id="welcome">

@@ -161,6 +161,9 @@ main{flex:1;min-width:0;padding:28px 40px 80px}
   body{font-size:16.5px}
 }
 
+.hero-pic{margin:22px auto 6px;max-width:460px;text-align:center}
+.hero-pic img{display:block;width:100%;height:auto;border-radius:16px;border:5px solid #fff;box-shadow:0 0 0 1.5px var(--brown),0 8px 24px rgba(51,36,26,.18)}
+.hero-pic figcaption{margin-top:8px;font:italic 600 15px var(--serif);color:var(--brown)}
 /* recipe card: hidden on screen, printed by "Print recipe card" */
 .rcard{display:none}
 .tools button + button{margin-left:8px}
@@ -5897,9 +5900,10 @@ function homePage() {
   return `<header class="hero"><p class="eyebrow">From our kitchen to yours</p><h1>Family Recipes</h1>
     <p class="lede">Made with love, seasoned to taste, and always better shared.</p>
     <svg class="flourish" width="120" height="14" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 7h44M74 7h44" stroke="currentColor" stroke-width="1.5"/><path d="M60 13s-8-4.9-8-10.8C52 0 54.5 0 56 0c2 0 3 .8 4 2 1-1.2 2-2 4-2 1.5 0 4 0 4 2.2C68 8.1 60 13 60 13z" fill="currentColor"/></svg></header>
+    <figure class="hero-pic"><img src="print/covers/cover-cartoon-web.jpg" alt="The family at Thanksgiving 2025, drawn as a cartoon with everyone in chef's hats" width="900" height="1204"><figcaption>The cooks · Thanksgiving 2025</figcaption></figure>
     <div class="prose">${marked.parse(INTRO.body)}</div>
     <div class="cta-row"><a class="btn" href="#principles">Start with the Basics</a><a class="btn btn-ghost" href="print/family-cookbook.pdf" download>⤓ Download the printable cookbook (PDF)</a><a class="btn btn-ghost mail" href="#">Send Dad a recipe</a></div>
-    <p class="lede" style="font-size:14px;margin-top:0">Book-style PDF of every recipe, ready to print. Two covers from Thanksgiving 2025, photo and cartoon: <a href="print/family-cookbook-alt-cover.pdf" download>get the other one here</a>.</p>
+    <p class="lede" style="font-size:14px;margin-top:0">Book-style PDF of every recipe, ready to print. Prefer the real photo on the cover? <a href="print/family-cookbook-alt-cover.pdf" download>Get that version</a>.</p>
     <h2 class="section-h">What's Cooking</h2><div class="cards">${cards}</div>`;
 }
 function principlesPage() {
