@@ -5,3 +5,8 @@ _migration/
 # Never commit copyrighted books
 *.pdf
 *.epub
+
+# The printable cookbook is our own content, so it is committed for the website download.
+!print/*.pdf
+print/node_modules/
+print/.build/

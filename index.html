@@ -161,8 +161,28 @@ main{flex:1;min-width:0;padding:28px 40px 80px}
   body{font-size:16.5px}
 }
 
+/* recipe card: hidden on screen, printed by "Print recipe card" */
+.rcard{display:none}
+.tools button + button{margin-left:8px}
+
 /* print */
 @media print{
+  body.print-card .page > :not(.rcard){display:none!important}
+  body.print-card .rcard{display:block;border:2px solid var(--brown);outline:1px solid var(--brown);outline-offset:3px;border-radius:10px;padding:16px 20px;font-size:10pt;line-height:1.38}
+  .rcard-top{font-size:7.5pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border-bottom:1px dashed var(--rule);padding-bottom:5px}
+  .rcard-title{font:700 20pt/1.15 var(--serif);color:var(--brown);margin:8px 0 2px}
+  .rcard-sub{font-style:italic;margin:0 0 6px;color:#6b5847}
+  .rcard .meta{margin:6px 0 10px;padding:6px 10px;font-size:9pt}
+  .rcard-body{columns:2;column-gap:22px}
+  .rcard-body h2{font:700 12.5pt var(--serif);color:var(--brown);margin:8px 0 3px;border-bottom:1px solid var(--rule);break-after:avoid}
+  .rcard-body h2:first-child{margin-top:0}
+  .rcard-body h3,.rcard-body h4{font-size:10.5pt;margin:6px 0 2px;break-after:avoid}
+  .rcard-body p{margin:0 0 5px}
+  .rcard-body ul,.rcard-body ol{margin:0 0 5px;padding-left:16px}
+  .rcard-body li{margin:1px 0;break-inside:avoid}
+  .rcard-body table{width:100%;border-collapse:collapse;font-size:8.5pt;break-inside:avoid}
+  .rcard-body th,.rcard-body td{border:1px solid var(--rule);padding:2px 4px;text-align:left}
+  .rcard-foot{margin-top:10px;padding-top:5px;border-top:1px dashed var(--rule);font-size:8pt;color:#6b5847;text-align:center}
   body{background:#fff;font-size:11.5pt}
   .topbar,.sidebar,.scrim,.no-print,.pn,.footer,.cta-row,.toc{display:none!important}
   main{padding:0}
@@ -5849,7 +5869,7 @@ function buildNav() {
     });
     h += `</div></details>`;
   });
-  h += `<div class="side-foot"><a href="#" class="mail">✉ Send Dad a recipe</a></div>`;
+  h += `<div class="side-foot"><a href="#" class="mail">✉ Send Dad a recipe</a><br><a href="print/family-cookbook.pdf" download>⤓ Printable cookbook (PDF)</a></div>`;
   document.getElementById('sidebar').innerHTML = h;
 }
 
@@ -5878,7 +5898,8 @@ function homePage() {
     <p class="lede">Made with love, seasoned to taste, and always better shared.</p>
     <svg class="flourish" width="120" height="14" viewBox="0 0 120 14" aria-hidden="true"><path d="M2 7h44M74 7h44" stroke="currentColor" stroke-width="1.5"/><path d="M60 13s-8-4.9-8-10.8C52 0 54.5 0 56 0c2 0 3 .8 4 2 1-1.2 2-2 4-2 1.5 0 4 0 4 2.2C68 8.1 60 13 60 13z" fill="currentColor"/></svg></header>
     <div class="prose">${marked.parse(INTRO.body)}</div>
-    <div class="cta-row"><a class="btn" href="#principles">Start with the Basics</a><a class="btn btn-ghost mail" href="#">Send Dad a recipe</a></div>
+    <div class="cta-row"><a class="btn" href="#principles">Start with the Basics</a><a class="btn btn-ghost" href="print/family-cookbook.pdf" download>⤓ Download the printable cookbook (PDF)</a><a class="btn btn-ghost mail" href="#">Send Dad a recipe</a></div>
+    <p class="lede" style="font-size:14px;margin-top:0">Book-style PDF of every recipe, ready to print. Two covers from Thanksgiving 2025, photo and cartoon: <a href="print/family-cookbook-alt-cover.pdf" download>get the other one here</a>.</p>
     <h2 class="section-h">What's Cooking</h2><div class="cards">${cards}</div>`;
 }
 function principlesPage() {
@@ -5895,10 +5916,32 @@ function recipePage(r) {
   const a = withAnchors(marked.parse(r.body), "s");
   return `<div class="crumb"><a href="#home" onclick="openGroup('${esc(topOf(r)).replace(/'/g, "\\'")}')">${esc(r.chapter)}</a>${r.status === "draft" ? '<span class="badge">Draft — still testing</span>' : ''}</div>
     <h1>${esc(r.title)}</h1><p class="sub">${esc(r.sub)}</p>${metaHtml(r.meta)}
-    <div class="tools no-print"><button type="button" onclick="window.print()">Print this recipe</button></div>
+    <div class="tools no-print"><button type="button" onclick="window.print()">Print full recipe</button><button type="button" onclick="printCard()">Print recipe card</button></div>
     ${toc(a.heads)}<div class="prose">${a.html}</div>
     ${r.draft ? `<aside class="draft-box"><h3>Draft notes</h3>${marked.parse(r.draft)}</aside>` : ""}
+    ${cardHtml(r)}
     <nav class="pn">${prev ? `<a href="#r/${prev.slug}">← ${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a href="#r/${next.slug}">${esc(next.title)} →</a>` : "<span></span>"}</nav>`;
+}
+
+// ---- recipe card (compact print: the cooking parts only) ----
+const CARD_SKIP = /^(Why This Works|Troubleshooting|Salt, Fat, Acid, Heat|Notes for the Kids|Pair With|Serve With|Variants)/i;
+function cardHtml(r) {
+  const div = document.createElement('div'); div.innerHTML = marked.parse(r.body);
+  let keep = false, out = "";
+  [...div.children].forEach(el => {
+    if (el.tagName === "H2") keep = !CARD_SKIP.test(el.textContent.trim());
+    if (keep) out += el.outerHTML;
+  });
+  return `<section class="rcard" aria-hidden="true"><div class="rcard-top">From the kitchen of Family Recipes · ${esc(r.chapter)}</div>
+    <h2 class="rcard-title">${esc(r.title)}</h2>${r.sub ? `<p class="rcard-sub">${esc(r.sub)}</p>` : ""}${metaHtml(r.meta)}
+    <div class="rcard-body">${out}</div>
+    <div class="rcard-foot">The full recipe, with the why behind it, is in the family cookbook online.</div></section>`;
+}
+function printCard() {
+  document.body.classList.add('print-card');
+  const done = () => { document.body.classList.remove('print-card'); window.removeEventListener('afterprint', done); };
+  window.addEventListener('afterprint', done);
+  window.print();
 }
 
 // ---- routing ----
